@@ -24,19 +24,14 @@ namespace Chapter4
             Exercize2_2(ymCollection);
             Console.WriteLine("-----------");
 
-            //4.2.3
-            Console.WriteLine("-- 4.2.3 --");
-            Console.WriteLine(FindFirst21C(ymCollection));
-            Console.WriteLine("------------\n");
-
             //4.2.4(呼び出し)
             Console.WriteLine("-- 4.2.4 --");
-            Exercize2_2(ymCollection);
+            Exercize2_4(ymCollection);
             Console.WriteLine("------------\n");
 
             //4.2.5(呼び出し)
             Console.WriteLine("-- 4.2.5 --");
-            Exercize2_2(ymCollection);
+            Exercize2_5(ymCollection);
             Console.WriteLine("------------\n");
 
         }
