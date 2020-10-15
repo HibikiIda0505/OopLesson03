@@ -12,26 +12,28 @@ namespace Chapter7
     {
         static void Main(string[] args)
         {
-            //var lines = File.ReadAllLines("sample.txt");
-            //var we = new WordsExtractor(lines);
-            //foreach (var word in we.Extract()) 
-            //{
-            //    Console.WriteLine(word);
-            //}]
-            DuplicateKeySample();
+            Console.WriteLine("**********************");
+            Console.WriteLine("* 辞書登録プログラム *");
+            Console.WriteLine("**********************");
+
+            Console.WriteLine("1．登録 2．内容を表示");
+
         }
 
-        static public void DuplicateKeySample()
+        static public void DuplicateKey()
         {
             // ディクショナリの初期化
             var dict = new Dictionary<string, List<string>>() {
-               { "PC", new List<string> { "パーソナル コンピュータ", "プログラム カウンタ", } },
-               { "CD", new List<string> { "コンパクト ディスク", "キャッシュ ディスペンサー", } },
+               
             };
 
             // ディクショナリに追加
-            var key = "EC";
-            var value = "電子商取引";
+            Console.Write("KEYを入力：");
+            var key = Console.ReadLine();
+
+            Console.Write("VALUEを入力：");
+            var value = Console.ReadLine();
+
             if (dict.ContainsKey(key))
             {
                 dict[key].Add(value);
@@ -40,6 +42,7 @@ namespace Chapter7
             {
                 dict[key] = new List<string> { value };
             }
+            Console.WriteLine("登録しました！");
 
             // ディクショナリの内容を列挙
             foreach (var item in dict)
