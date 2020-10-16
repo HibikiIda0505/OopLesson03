@@ -12,45 +12,45 @@ namespace Chapter7
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("**********************");
-            Console.WriteLine("* 辞書登録プログラム *");
-            Console.WriteLine("**********************");
-
-            Console.WriteLine("1．登録 2．内容を表示");
+            var text = "Cozy lummox gives smart squid who asks for job pen";
+            Exercise1_1(text);  //問題7.1.1
 
         }
 
-        static public void DuplicateKey()
+        static void Exercise1_1(string text)
         {
-            // ディクショナリの初期化
-            var dict = new Dictionary<string, List<string>>() {
-               
-            };
-
-            // ディクショナリに追加
-            Console.Write("KEYを入力：");
-            var key = Console.ReadLine();
-
-            Console.Write("VALUEを入力：");
-            var value = Console.ReadLine();
-
-            if (dict.ContainsKey(key))
+            var dict = new SortedDictionary<char, int>();
+            //foreachで一文字ずつ取り出す
+            foreach (var ch in text)
             {
-                dict[key].Add(value);
+                char upc = char.ToUpper(ch);
+                //(半角アルファベットか調べる処理)
+                //大文字へ変換
+                //if ('A' <= char && char <= 'Z') {   //chは文字列型
+                //     keyに存在するか？
+                //     ・存在する
+                //          対応するValueの値をインクリメント
+                //     ・存在しない
+                //          単語をkeyへ登録してValueに1を設定
+                //}
+                if ('A' <= upc && upc <= 'Z')
+                {
+                    if (dict.ContainsKey(upc))          
+                    {
+                        //既に登録済み
+                        dict[upc]++;
+                    }
+                    else
+                    {
+                        //未登録
+                        dict[upc] = 1;
+                    }
+                }
             }
-            else
-            {
-                dict[key] = new List<string> { value };
-            }
-            Console.WriteLine("登録しました！");
-
-            // ディクショナリの内容を列挙
+            //累計が完了したらテキストの出力例を参考に出力して終了
             foreach (var item in dict)
             {
-                foreach (var term in item.Value)
-                {
-                    Console.WriteLine("{0} : {1}", item.Key, term);
-                }
+                Console.WriteLine($"{item.Key}:{item.Value}");
             }
         }
     }
