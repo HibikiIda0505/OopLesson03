@@ -11,8 +11,8 @@ namespace SendMailApp
         public string Smtp { get; set; }    //SMTPサーバー
         public string MailAddress { get; set; }     //自メールアドレス（送信元）
         public string PassWord { get; set; }    //パスワード
-        public string Port { get; set; }    //ポート番号
-        public string Ssl { get; set; }     //SSL設定
+        public int Port { get; set; }    //ポート番号
+        public bool Ssl { get; set; }     //SSL設定
 
         //初期設定用
         public void DefaultSet()
