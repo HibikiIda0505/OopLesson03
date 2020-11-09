@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
+using System.Xml.Serialization;
 
 namespace SendMailApp
 {
@@ -22,7 +23,6 @@ namespace SendMailApp
             }
             return Instance;
         }
-
         public string Smtp { get; set; }    //SMTPサーバー
         public string MailAddress { get; set; }     //自メールアドレス（送信元）
         public string PassWord { get; set; }    //パスワード
@@ -70,6 +70,18 @@ namespace SendMailApp
             this.Port = port;
             this.Ssl = ssl;
             return true;
+        }
+
+        public void Serialise()//シリアル化  P305参考
+        {
+            //途中
+            //var serializer = new XmlSerializer(config.GetType());
+            //serializer.Serialize();   
+        }
+
+        public void DeSerialise()//逆シリアル化   P307参考
+        {
+
         }
     }
 }

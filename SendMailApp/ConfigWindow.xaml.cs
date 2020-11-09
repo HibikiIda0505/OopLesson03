@@ -24,7 +24,7 @@ namespace SendMailApp
             InitializeComponent();
         }
 
-        private void btDefault_Click(object sender,RoutedEvent e)
+        private void btDefault_Click(object sender, RoutedEventArgs e)
         {
             Config cf = (Config.GetInstance()).getDefaultStatus();
             //Config defaultData = cf.getDefaultStatus();
@@ -35,9 +35,8 @@ namespace SendMailApp
             tbPassWord.Password = cf.PassWord;
             cbSsl.IsChecked = cf.Ssl;
         }
-
         //適用(更新)
-        private void btApply_Click(object sender,RoutedEventArgs e)
+        private void btApply_Click(object sender, RoutedEventArgs e)
         {
             (Config.GetInstance()).UpdateStatus(
                 tbSmtp.Text,
@@ -46,5 +45,23 @@ namespace SendMailApp
                 int.Parse(tbPort.Text),
                 cbSsl.IsChecked ?? false);  //更新処理を呼び出す
         }
-    }
+        //OKボタン
+        private void btOk_Click(object sender, RoutedEventArgs e)
+        {
+            btApply_Click(sender, e);   //更新処理を呼び出す
+            this.Close();
+        }
+
+        //キャンセルボタン
+        private void btCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        //設定画面ロード時に一度だけ呼び出される
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+           
+        }
+    } 
 }

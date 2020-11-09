@@ -44,7 +44,7 @@ namespace SendMailApp
         }
 
         //メール送信処理
-        private void btOk_Click(object sender, RoutedEventArgs e)
+        private void btSend_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -74,7 +74,6 @@ namespace SendMailApp
             {
                 MessageBox.Show(ex.Message);
             }
-         
         }
         //送信キャンセル処理
         private void btCancel_Click(object sender, RoutedEventArgs e)
@@ -92,7 +91,12 @@ namespace SendMailApp
         //メインウインドウがロードされるタイミングで呼び出される
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Config.GetInstance().DeSerialise();
+        }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Config.GetInstance().DeSerialise();
         }
     }
 }
