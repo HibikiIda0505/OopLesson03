@@ -63,7 +63,6 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="送信元:" 
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBox x:Name="tbSender" Grid.Row="1" Grid.Column="1" Margin="5" FontSize="20"/>
-
             </Grid>
         </GroupBox>
         

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SendMailApp
@@ -74,14 +76,19 @@ namespace SendMailApp
 
         public void Serialise()//シリアル化  P305参考
         {
-            //途中
-            //var serializer = new XmlSerializer(config.GetType());
-            //serializer.Serialize();   
+          //using (var writer = XmlWriter.Create("config.xml"))
+          //{
+          //  var serializer = new XmlSerializer(instance.GetType());
+          //  serializer.Serialize(writer, instance);
+          //}
         }
 
         public void DeSerialise()//逆シリアル化   P307参考
         {
-
+            using (var reader = XmlReader.Create("config.xml"))
+            {
+                
+            }
         }
     }
 }
