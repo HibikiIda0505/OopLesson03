@@ -84,11 +84,12 @@ namespace SendMailApp
 
         private void btConfig_Click(object sender, RoutedEventArgs e)
         {
-
+            ConfigWindow configWindow = new ConfigWindow();//設定画面のインスタンスを生成
+            configWindow.Show();  //表示
         }
 
         //設定画面表示
-        private void ConfigWindowShow(object sender,RoutedEventArgs e)
+        private void ConfigWindowShow()
         {
             ConfigWindow configWindow = new ConfigWindow();//設定画面のインスタンスを生成
             configWindow.Show();  //表示
@@ -104,9 +105,8 @@ namespace SendMailApp
             catch (FileNotFoundException)
             {
                 //btConfig_Click(sender, e);
-                //ConfigWindowShow();
+                ConfigWindowShow();    //ファイルが存在しないので設定画面を先に生成
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -115,9 +115,14 @@ namespace SendMailApp
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Config.GetInstance().DeSerialise();
+            try
+            {
+                Config.GetInstance().Serialise(); //シリアル化 XML→オブジェクト
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
-        
     }
 }

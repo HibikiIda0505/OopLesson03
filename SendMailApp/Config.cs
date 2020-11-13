@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,9 +34,7 @@ namespace SendMailApp
 
         //コンストラクタ(外部からnewできないようにする)
         private Config()
-        {
-
-        }
+        { }
 
         //初期設定用
         public void DefaultSet()
@@ -74,20 +73,20 @@ namespace SendMailApp
             return true;
         }
 
-        public void Serialise()//シリアル化  P305参考
+        public void Serialise()//シリアル化  
         {
-          //using (var writer = XmlWriter.Create("config.xml"))
-          //{
-          //  var serializer = new XmlSerializer(instance.GetType());
-          //  serializer.Serialize(writer, instance);
-          //}
+            XmlSerializer xs = new XmlSerializer(typeof(Config));
+            StreamWriter sw = new StreamWriter("Config.xml");
+            Config cf = Config.GetInstance();
+            xs.Serialize(sw, cf);
         }
 
-        public void DeSerialise()//逆シリアル化   P307参考
+        public void DeSerialise()//逆シリアル化   
         {
-            using (var reader = XmlReader.Create("config.xml"))
-            {
-                
+            using (
+                StreamReader sr = new StreamReader("Config.xml")){
+                XmlSerializer xs = new XmlSerializer(typeof(Config));
+                Instance = xs.Deserialize(sr) as Config;
             }
         }
     }
