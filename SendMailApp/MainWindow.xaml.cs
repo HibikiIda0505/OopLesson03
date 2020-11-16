@@ -82,6 +82,7 @@ namespace SendMailApp
             sc.SendAsyncCancel();
         }
 
+        //設定ボタン
         private void btConfig_Click(object sender, RoutedEventArgs e)
         {
             ConfigWindow configWindow = new ConfigWindow();//設定画面のインスタンスを生成

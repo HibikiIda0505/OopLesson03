@@ -45,23 +45,61 @@ namespace SendMailApp
                 int.Parse(tbPort.Text),
                 cbSsl.IsChecked ?? false);  //更新処理を呼び出す
         }
+
         //OKボタン
         private void btOk_Click(object sender, RoutedEventArgs e)
         {
+            Warning();
             btApply_Click(sender, e);   //更新処理を呼び出す
+        }
+
+        public void Warning()
+        {
+            if (tbSmtp.Text == "")
+            {
+                MessageBox.Show("Smtpを入力してください");
+            }
+            else if(tbUserName.Text == "")
+            {
+                MessageBox.Show("ユーザー名を入力してください");
+            }
+            else if (int.Parse(tbPort.Text) == 0)
+            {
+                MessageBox.Show("ポート番号を入力してください");
+            }
+            else if (tbPassWord.Password == "")
+            {
+                MessageBox.Show("パスワードを入力してください");
+            }
+            else if (tbSender.Text == "")
+            {
+                MessageBox.Show("送信元を入力してください");
+            }
             this.Close();
         }
 
         //キャンセルボタン
         private void btCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Config ctf = Config.GetInstance();
+            if (tbSmtp.Text != ctf.Smtp || int.Parse(tbPort.Text) != ctf.Port||
+                tbUserName.Text != ctf.MailAddress || tbPassWord.Password != ctf.PassWord ||
+                cbSsl.IsChecked != ctf.Ssl || tbSender.Text != ctf.MailAddress)
+            {
+                MessageBoxResult result = MessageBox.Show("変更がされていません", "警告",
+                    MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.OK)
+                {
+                    this.Close();
+                }
+                else if(result == MessageBoxResult.Cancel)
+                {
+
+                }
+            }
         }
 
-        //設定画面ロード時に一度だけ呼び出される
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-           
-        }
+        //ロード時に呼び出される
+
     } 
 }
