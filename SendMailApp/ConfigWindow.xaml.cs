@@ -31,13 +31,16 @@ namespace SendMailApp
 
             tbSmtp.Text = cf.Smtp;
             tbPort.Text = cf.Port.ToString();
-            tbSender.Text = tbUserName.Text = cf.MailAddress;
+            tbUserName.Text = cf.MailAddress;
             tbPassWord.Password = cf.PassWord;
             cbSsl.IsChecked = cf.Ssl;
+            tbSender.Text = cf.MailAddress;
         }
+
         //適用(更新)
         private void btApply_Click(object sender, RoutedEventArgs e)
         {
+            Warning();
             (Config.GetInstance()).UpdateStatus(
                 tbSmtp.Text,
                 tbUserName.Text,
@@ -99,7 +102,17 @@ namespace SendMailApp
             }
         }
 
-        //ロード時に呼び出される
+        //ロード時に一度だけ呼び出される
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Config ctf = Config.GetInstance();
 
-    } 
+            tbSmtp.Text = ctf.Smtp;
+            tbPort.Text = ctf.Port.ToString();
+            tbUserName.Text = ctf.MailAddress;
+            tbPassWord.Password = ctf.PassWord;
+            cbSsl.IsChecked = ctf.Ssl;
+            tbSender.Text = ctf.MailAddress;
+        }
+    }
 }

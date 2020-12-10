@@ -16,6 +16,11 @@ namespace SendMailApp
     {
         //単一のインスタンス
         private static Config Instance;
+        public string Smtp { get; set; }    //SMTPサーバー
+        public string MailAddress { get; set; }     //自メールアドレス（送信元）
+        public string PassWord { get; set; }    //パスワード
+        public int Port { get; set; }    //ポート番号
+        public bool Ssl { get; set; }     //SSL設定
 
         //インスタンスの取得
         public static Config GetInstance()
@@ -26,11 +31,6 @@ namespace SendMailApp
             }
             return Instance;
         }
-        public string Smtp { get; set; }    //SMTPサーバー
-        public string MailAddress { get; set; }     //自メールアドレス（送信元）
-        public string PassWord { get; set; }    //パスワード
-        public int Port { get; set; }    //ポート番号
-        public bool Ssl { get; set; }     //SSL設定
 
         //コンストラクタ(外部からnewできないようにする)
         private Config()
@@ -70,10 +70,12 @@ namespace SendMailApp
             this.PassWord = passWord;
             this.Port = port;
             this.Ssl = ssl;
+
             return true;
         }
 
-        public void Serialise()//シリアル化  
+        //シリアル化  
+        public void Serialise()
         {
             XmlSerializer xs = new XmlSerializer(typeof(Config));
             StreamWriter sw = new StreamWriter("Config.xml");
@@ -81,7 +83,8 @@ namespace SendMailApp
             xs.Serialize(sw, cf);
         }
 
-        public void DeSerialise()//逆シリアル化   
+        //逆シリアル化 
+        public void DeSerialise()  
         {
             using (
                 StreamReader sr = new StreamReader("Config.xml")){

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -49,33 +50,54 @@ namespace SendMailApp
         {
             try
             {
-                MailMessage msg = new MailMessage("ojsinfosys01@gmail.com", tbTo.Text);
+                Config ctf = Config.GetInstance();
+                MailMessage msg = new MailMessage(ctf.MailAddress, tbTo.Text);
                 if (tbCc.Text != "")
                 {
                     msg.CC.Add(tbCc.Text);
                 }
-
-                if (tbBcc.Text != "")
+                else if (tbBcc.Text != "")
                 {
-                    msg.CC.Add(tbBcc.Text);
+                    msg.Bcc.Add(tbBcc.Text);
                 }
-
                 msg.Subject = tbTitle.Text; //件名
                 msg.Body = tbBody.Text; //本文
+                foreach (var send in lbfile.Items)
+                {
+                    msg.Attachments.Add(new Attachment(send.ToString()));
+                }
 
                 sc.Host = "smtp.gmail.com";//SMTPサーバーの設定
                 sc.Port = 587;
                 sc.EnableSsl = true;
-                sc.Credentials = new NetworkCredential("ojsinfosys01@gmail.com", "ojsInfosys2020");
+                sc.Credentials = new NetworkCredential(ctf.MailAddress, ctf.PassWord);
+                if (tbBody.Text == "" || lbfile.Items == null || tbTitle.Text == "")
+                {
+                    MessageBoxResult result = MessageBox.Show("空白ですが大丈夫ですか？", "注意",
+                    MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        sc.SendMailAsync(msg);
+                    }
+                    else if (result == MessageBoxResult.Cancel)
+                    {
 
-                //sc.Send(msg);   //送信
-                sc.SendMailAsync(msg);
+                    }
+                }
+                else
+                {
+                    //sc.Send(msg);   //送信
+                    sc.SendMailAsync(msg);
+
+                }
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
         //送信キャンセル処理
         private void btCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -123,6 +145,33 @@ namespace SendMailApp
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void tbDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbfile.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("選択してください。");
+
+            }
+            else
+            {
+                lbfile.Items.RemoveAt(lbfile.SelectedIndex);
+            }
+        }
+
+        private void tbAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var fod = new OpenFileDialog();
+            fod.Multiselect = true;
+            if (fod.ShowDialog() == true)
+            {
+                foreach (var file in fod.FileNames)
+                {
+                    lbfile.Items.Add(file);
+                }
+
             }
         }
     }
