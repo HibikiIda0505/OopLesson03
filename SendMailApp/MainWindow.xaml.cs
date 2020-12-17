@@ -73,7 +73,7 @@ namespace SendMailApp
                 sc.Credentials = new NetworkCredential(ctf.MailAddress, ctf.PassWord);
                 if (tbBody.Text == "" || lbfile.Items == null || tbTitle.Text == "")
                 {
-                    MessageBoxResult result = MessageBox.Show("空白ですが大丈夫ですか？", "注意",
+                    MessageBoxResult result = MessageBox.Show("空白ですが、大丈夫ですか？", "注意",
                     MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.OK)
                     {
