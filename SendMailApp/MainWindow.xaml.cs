@@ -107,8 +107,7 @@ namespace SendMailApp
         //設定ボタン
         private void btConfig_Click(object sender, RoutedEventArgs e)
         {
-            ConfigWindow configWindow = new ConfigWindow();//設定画面のインスタンスを生成
-            configWindow.Show();  //表示
+            ConfigWindowShow();  ////設定画面表示
         }
 
         //設定画面表示
