@@ -102,36 +102,35 @@ namespace SendMailApp
         private void btCancel_Click(object sender, RoutedEventArgs e)
         {
             sc.SendAsyncCancel();
+            this.Close();
         }
 
         //設定ボタン
         private void btConfig_Click(object sender, RoutedEventArgs e)
         {
-            ConfigWindowShow();  ////設定画面表示
+            ConfigWindow configWindow = new ConfigWindow();
+            configWindow.Show();  ////設定画面表示
         }
 
         //設定画面表示
-        private void ConfigWindowShow()
-        {
-            ConfigWindow configWindow = new ConfigWindow();//設定画面のインスタンスを生成
-            configWindow.Show();  //表示
-        }
+        //private void ConfigWindowShow()
+        //{
+        //    ConfigWindow configWindow = new ConfigWindow();//設定画面のインスタンスを生成
+        //    configWindow.Show();  //表示
+        //}
 
         //メインウインドウがロードされるタイミングで呼び出される
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                Config.GetInstance().DeSerialise();//逆シリアル化　XML→オブジェクト
+                Config.GetInstance().DeSerialise();//逆シリアル化 XML → オブジェクト
             }
             catch (FileNotFoundException)
             {
-                //btConfig_Click(sender, e);
-                ConfigWindowShow();    //ファイルが存在しないので設定画面を先に生成
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                //ConfigWindowShow();//ファイルが存在しないので設定画面を先に表示
+                ConfigWindow configWindow = new ConfigWindow();
+                configWindow.Show();
             }
         }
 
@@ -147,6 +146,7 @@ namespace SendMailApp
             }
         }
 
+        //削除
         private void tbDelete_Click(object sender, RoutedEventArgs e)
         {
             if (lbfile.SelectedItems.Count == 0)
@@ -159,18 +159,14 @@ namespace SendMailApp
                 lbfile.Items.RemoveAt(lbfile.SelectedIndex);
             }
         }
-
+        //追加
         private void tbAdd_Click(object sender, RoutedEventArgs e)
         {
             var fod = new OpenFileDialog();
-            fod.Multiselect = true;
+
             if (fod.ShowDialog() == true)
             {
-                foreach (var file in fod.FileNames)
-                {
-                    lbfile.Items.Add(file);
-                }
-
+                lbfile.Items.Add(fod.FileName);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace SendMailApp
     public class Config
     {
         //単一のインスタンス
-        private static Config Instance;
+        private static Config instance { get; set; }
         public string Smtp { get; set; }    //SMTPサーバー
         public string MailAddress { get; set; }     //自メールアドレス（送信元）
         public string PassWord { get; set; }    //パスワード
@@ -25,11 +25,11 @@ namespace SendMailApp
         //インスタンスの取得
         public static Config GetInstance()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = new Config();
+                instance = new Config();
             }
-            return Instance;
+            return instance;
         }
 
         //コンストラクタ(外部からnewできないようにする)
@@ -77,19 +77,35 @@ namespace SendMailApp
         //シリアル化  
         public void Serialise()
         {
-            XmlSerializer xs = new XmlSerializer(typeof(Config));
-            StreamWriter sw = new StreamWriter("Config.xml");
-            Config cf = Config.GetInstance();
-            xs.Serialize(sw, cf);
+            try
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(Config));
+                StreamWriter sw = new StreamWriter("Config.xml");
+                Config cf = Config.GetInstance();
+                xs.Serialize(sw, cf);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
         }
 
         //逆シリアル化 
         public void DeSerialise()  
         {
-            using (
-                StreamReader sr = new StreamReader("Config.xml")){
-                XmlSerializer xs = new XmlSerializer(typeof(Config));
-                Instance = xs.Deserialize(sr) as Config;
+            try
+            {
+                using (StreamReader sr = new StreamReader("Config.xml"))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(Config));
+                    instance = xs.Deserialize(sr) as Config;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
             }
         }
     }

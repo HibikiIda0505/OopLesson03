@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="件名：" FontSize="20" 
                    VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>
-        <TextBox x:Name="tbTitle" Grid.Row="0" Grid.Column="1" Margin="10" FontSize="20"/>
+        <TextBox x:Name="tbTitle" Grid.Row="0" Grid.Column="1" Margin="4" FontSize="20"/>
         
         <TextBlock Grid.Row="1" Text="To：" FontSize="20" 
                    VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>

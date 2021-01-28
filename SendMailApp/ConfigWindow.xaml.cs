@@ -24,6 +24,7 @@ namespace SendMailApp
             InitializeComponent();
         }
 
+        //初期値ボタン
         private void btDefault_Click(object sender, RoutedEventArgs e)
         {
             Config cf = (Config.GetInstance()).getDefaultStatus();
@@ -31,10 +32,9 @@ namespace SendMailApp
 
             tbSmtp.Text = cf.Smtp;
             tbPort.Text = cf.Port.ToString();
-            tbUserName.Text = cf.MailAddress;
             tbPassWord.Password = cf.PassWord;
             cbSsl.IsChecked = cf.Ssl;
-            tbSender.Text = cf.MailAddress;
+            tbSender.Text = tbUserName.Text = cf.MailAddress;
         }
 
         //適用(更新)
@@ -85,12 +85,14 @@ namespace SendMailApp
         private void btCancel_Click(object sender, RoutedEventArgs e)
         {
             Config ctf = Config.GetInstance();
+
             if (tbSmtp.Text != ctf.Smtp || int.Parse(tbPort.Text) != ctf.Port||
                 tbUserName.Text != ctf.MailAddress || tbPassWord.Password != ctf.PassWord ||
                 cbSsl.IsChecked != ctf.Ssl || tbSender.Text != ctf.MailAddress)
             {
                 MessageBoxResult result = MessageBox.Show("変更がされていません", "警告",
                     MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
                 if (result == MessageBoxResult.OK)
                 {
                     this.Close();
